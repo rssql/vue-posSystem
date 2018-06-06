@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>css3-animate</title>
+		<style>
+			body,ul
+			{
+				margin: 0;
+				padding:0;
+			}
+			ul
+			{
+				list-style: none;
+			}
+			
+			@-webkit-keyframes move
+			{
+				0%
+				{
+					left:0;
+				}
+				100%
+				{
+					left:-912px;
+				}
+			}
+			#lun
+			{
+				border: 2px dotted red;
+				width:1000px;
+				margin: 10px auto ;
+				padding-bottom: 20px;
+			}
+			h4
+			{	
+				text-align: center;
+				margin: 10px auto ;
+			}
+			#wrap
+			{
+				width: 912px;
+				height: 112px;
+				border:1px solid #000;
+				position:relative;
+				margin: 0px auto;
+				overflow: hidden;
+			}
+			#lists
+			{
+				position: absolute;
+				left:0;
+				top:0;
+				-webkit-animation: 18s move linear infinite;
+				width:200%;
+			}
+			#lists li
+			{
+				width: 150px;
+				border:1px solid #fff;
+				float: left;
+			}
+			
+			#wrap:hover #lists
+			{
+				-webkit-animation-play-state :paused;
+			}
+			
+			
+			@-webkit-keyframes open
+			{
+				0%
+				{
+					-webkit-transform:rotateX(180deg);
+					opacity:0;
+				}
+				50%
+				{
+					-webkit-transform:rotateX(-25deg);
+					opacity:1;
+				}
+				60%
+				{
+					-webkit-transform:rotateX(18deg);
+					opacity:1;
+				}
+				70%
+				{
+					-webkit-transform:rotateX(-12deg);
+					opacity:1;
+				}
+				80%
+				{
+					-webkit-transform:rotateX(8deg);
+					opacity:1;
+				}
+				90%
+				{
+					-webkit-transform:rotateX(-6deg);
+					opacity:1;
+				}
+				100%
+				{
+					-webkit-transform:rotateX(0deg);
+					opacity:1;
+				}
+			}
+			
+			@-webkit-keyframes clos
+			{
+				0%
+				{
+					-webkit-transform:rotateX(0deg);
+					opacity: 1;
+				}
+				100%
+				{
+					-webkit-transform:rotateX(-180deg);
+					opacity: 0;
+				}
+			}
+			.box
+			{
+				width:600px;
+				height:360px; 
+				position:relative;
+				margin:20px auto;
+			}
+			#prev,#next
+			{
+				width:50px;
+				height:50px;
+				background:#ccc; 
+				border-radius:50%;
+				position:absolute;
+				top:155px; 
+				box-shadow:2px 2px 10px #666;
+				text-align:center;
+				font-size:40px;
+				line-height:50px; 
+				font-family:Verdana, Geneva, sans-serif; 				
+				text-decoration:none;
+				color:#fff;
+			}
+			
+			#prev
+			{
+				left:-100px;
+			}
+			#next
+			{
+				right:-100px;
+			}
+			#imgs
+			{
+				width:600px;
+				height:360px; 
+				position:relative; 
+				-webkit-transform-style:preserve-3d; 
+				-webkit-perspective:800px;
+			}
+			#imgs img
+			{
+				width:600px;
+				height:360px; 
+				position:absolute;
+				left:0;
+				top:0; 
+				-webkit-transform-origin:bottom;
+				-webkit-transform:rotateX(-180deg); 
+				opacity:0;
+			}
+			#imgs .show
+			{ 
+				-webkit-animation:open 1.2s ease-in;
+				-webkit-transform:rotateX(0deg);
+				opacity:1;
+			}
+			#imgs .hide{ 
+				-webkit-animation:clos 1s ease;
+				-webkit-transform:rotateX(-180deg);
+				opacity:0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="lun">
+			<h4>css3-无缝滚动</h4>	
+			<div id="wrap">
+				<ul id="lists">
+					<li><img src="img/30.jpg" alt="" /></li>
+					<li><img src="img/31.jpg" alt="" /></li>
+					<li><img src="img/32.jpg" alt="" /></li>
+					<li><img src="img/33.jpg" alt="" /></li>
+					<li><img src="img/34.jpg" alt="" /></li>
+					<li><img src="img/35.jpg" alt="" /></li>
+					<li><img src="img/30.jpg" alt="" /></li>
+					<li><img src="img/31.jpg" alt="" /></li>
+					<li><img src="img/32.jpg" alt="" /></li>
+					<li><img src="img/33.jpg" alt="" /></li>
+					<li><img src="img/34.jpg" alt="" /></li>
+					<li><img src="img/35.jpg" alt="" /></li>
+				</ul>
+			</div>
+		</div>
+		<h4>css3-图片轮换</h4>	
+		<div class="box">
+			<a href="#" id="prev">&lt;</a>
+		    <div id="imgs">
+		    	<img src="img/40.jpg" alt="" class="show"/>
+		        <img src="img/41.jpg" alt=""/>
+		        <img src="img/42.jpg" alt=""/>
+		        <img src="img/43.jpg" alt=""/>
+		        <img src="img/44.jpg" alt=""/>
+		        <img src="img/45.jpg" alt=""/>
+		        <img src="img/46.jpg" alt=""/>
+		    </div>
+		    <a href="#" id="next">&gt;</a>
+		</div>
+
+		
+	<script type="text/javascript">
+		window.onload=function(){
+			var oPrev=document.getElementById("prev");
+			var oNext=document.getElementById("next");
+			var oBox=document.getElementsByClassName('box')[0];
+			var aImg=oBox.getElementsByTagName("img");
+			var iNow=0;
+			oPrev.onclick=function()
+			{
+				aImg[iNow].className="hide";
+				iNow--;
+				if(iNow<0)
+				{
+					iNow=aImg.length-1;
+				}
+				aImg[iNow].className="show";
+			};
+			oNext.onclick=function()
+			{
+				aImg[iNow].className="hide";
+				iNow++;
+				if(iNow==aImg.length)
+				{
+					iNow=0;
+				}
+				aImg[iNow].className="show";
+			};
+		}
+	</script>
+	</body>	
+</html>
